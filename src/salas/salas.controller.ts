@@ -7,15 +7,19 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { AuthGuard } from '../auth/guards/auth.guard';
 import { SalasService } from './salas.service';
 import { CreateSalaDto } from './dto/create-sala.dto';
 import { UpdateSalaDto } from './dto/update-sala.dto';
@@ -42,6 +46,9 @@ export class SalasController {
   }
 
   @Post()
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @ApiUnauthorizedResponse({ description: 'Token no enviado o inválido' })
   @ApiOperation({ summary: 'Crear una sala' })
   @ApiCreatedResponse({ description: 'Sala creada' })
   @ApiBadRequestResponse({ description: 'Datos inválidos' })
@@ -50,6 +57,9 @@ export class SalasController {
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @ApiUnauthorizedResponse({ description: 'Token no enviado o inválido' })
   @ApiOperation({ summary: 'Actualizar una sala' })
   @ApiOkResponse({ description: 'Sala actualizada' })
   @ApiBadRequestResponse({ description: 'Datos inválidos' })
@@ -59,6 +69,9 @@ export class SalasController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @ApiUnauthorizedResponse({ description: 'Token no enviado o inválido' })
   @ApiOperation({ summary: 'Eliminar una sala (borrado lógico)' })
   @ApiOkResponse({ description: 'Sala eliminada' })
   @ApiNotFoundResponse({ description: 'La sala no existe' })

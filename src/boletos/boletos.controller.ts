@@ -7,15 +7,19 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { AuthGuard } from '../auth/guards/auth.guard';
 import { BoletosService } from './boletos.service';
 import { CreateBoletoDto } from './dto/create-boleto.dto';
 import { UpdateBoletoDto } from './dto/update-boleto.dto';
@@ -46,6 +50,9 @@ export class BoletosController {
   }
 
   @Post()
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @ApiUnauthorizedResponse({ description: 'Token no enviado o inválido' })
   @ApiOperation({
     summary:
       'Vender un boleto (si no se envía precioPagado se usa el precio de la función)',
@@ -61,6 +68,9 @@ export class BoletosController {
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @ApiUnauthorizedResponse({ description: 'Token no enviado o inválido' })
   @ApiOperation({ summary: 'Actualizar un boleto' })
   @ApiOkResponse({ description: 'Boleto actualizado' })
   @ApiBadRequestResponse({
@@ -75,6 +85,9 @@ export class BoletosController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @ApiUnauthorizedResponse({ description: 'Token no enviado o inválido' })
   @ApiOperation({ summary: 'Anular un boleto (borrado lógico)' })
   @ApiOkResponse({ description: 'Boleto anulado' })
   @ApiNotFoundResponse({ description: 'El boleto no existe' })

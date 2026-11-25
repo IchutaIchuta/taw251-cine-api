@@ -21,6 +21,7 @@ async function bootstrap() {
     .setTitle('API Sistema de Cine')
     .setDescription('Práctica TAW-251 - NestJS + TypeORM + PostgreSQL')
     .setVersion('1.0')
+    .addBearerAuth() // botón para pegar el token JWT en Scalar
     .build();
   const document = SwaggerModule.createDocument(app, config);
   app.use('/docs', apiReference({ content: document }));

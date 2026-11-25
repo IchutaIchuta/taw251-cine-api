@@ -7,15 +7,19 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { AuthGuard } from '../auth/guards/auth.guard';
 import { ClientesService } from './clientes.service';
 import { CreateClienteDto } from './dto/create-cliente.dto';
 import { UpdateClienteDto } from './dto/update-cliente.dto';
@@ -45,6 +49,9 @@ export class ClientesController {
   }
 
   @Post()
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @ApiUnauthorizedResponse({ description: 'Token no enviado o inválido' })
   @ApiOperation({ summary: 'Crear un cliente' })
   @ApiCreatedResponse({ description: 'Cliente creado' })
   @ApiBadRequestResponse({ description: 'Datos inválidos' })
@@ -53,6 +60,9 @@ export class ClientesController {
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @ApiUnauthorizedResponse({ description: 'Token no enviado o inválido' })
   @ApiOperation({ summary: 'Actualizar un cliente' })
   @ApiOkResponse({ description: 'Cliente actualizado' })
   @ApiBadRequestResponse({ description: 'Datos inválidos' })
@@ -62,6 +72,9 @@ export class ClientesController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @ApiUnauthorizedResponse({ description: 'Token no enviado o inválido' })
   @ApiOperation({ summary: 'Eliminar un cliente (borrado lógico)' })
   @ApiOkResponse({ description: 'Cliente eliminado' })
   @ApiNotFoundResponse({ description: 'El cliente no existe' })

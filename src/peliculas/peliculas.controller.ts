@@ -7,15 +7,19 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { AuthGuard } from '../auth/guards/auth.guard';
 import { PeliculasService } from './peliculas.service';
 import { CreatePeliculaDto } from './dto/create-pelicula.dto';
 import { UpdatePeliculaDto } from './dto/update-pelicula.dto';
@@ -45,6 +49,9 @@ export class PeliculasController {
   }
 
   @Post()
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @ApiUnauthorizedResponse({ description: 'Token no enviado o inválido' })
   @ApiOperation({ summary: 'Crear una película (con géneros opcionales)' })
   @ApiCreatedResponse({ description: 'Película creada' })
   @ApiBadRequestResponse({ description: 'Datos inválidos' })
@@ -54,6 +61,9 @@ export class PeliculasController {
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @ApiUnauthorizedResponse({ description: 'Token no enviado o inválido' })
   @ApiOperation({ summary: 'Actualizar una película' })
   @ApiOkResponse({ description: 'Película actualizada' })
   @ApiBadRequestResponse({ description: 'Datos inválidos' })
@@ -66,6 +76,9 @@ export class PeliculasController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @ApiUnauthorizedResponse({ description: 'Token no enviado o inválido' })
   @ApiOperation({ summary: 'Eliminar una película (borrado lógico)' })
   @ApiOkResponse({ description: 'Película eliminada' })
   @ApiNotFoundResponse({ description: 'La película no existe' })
@@ -74,6 +87,9 @@ export class PeliculasController {
   }
 
   @Post(':id/generos')
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @ApiUnauthorizedResponse({ description: 'Token no enviado o inválido' })
   @ApiOperation({ summary: 'Agregar géneros a una película (sin duplicar)' })
   @ApiCreatedResponse({ description: 'Géneros agregados' })
   @ApiBadRequestResponse({ description: 'Datos inválidos' })
@@ -86,6 +102,9 @@ export class PeliculasController {
   }
 
   @Delete(':id/generos/:idGenero')
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @ApiUnauthorizedResponse({ description: 'Token no enviado o inválido' })
   @ApiOperation({ summary: 'Quitar un género de una película' })
   @ApiOkResponse({ description: 'Género quitado' })
   @ApiBadRequestResponse({ description: 'Algún id no es un número' })

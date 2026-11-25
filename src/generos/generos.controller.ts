@@ -7,15 +7,19 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  UseGuards,
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
+  ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { AuthGuard } from '../auth/guards/auth.guard';
 import { GenerosService } from './generos.service';
 import { CreateGeneroDto } from './dto/create-genero.dto';
 import { UpdateGeneroDto } from './dto/update-genero.dto';
@@ -42,6 +46,9 @@ export class GenerosController {
   }
 
   @Post()
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @ApiUnauthorizedResponse({ description: 'Token no enviado o inválido' })
   @ApiOperation({ summary: 'Crear un género' })
   @ApiCreatedResponse({ description: 'Género creado' })
   @ApiBadRequestResponse({ description: 'Datos inválidos' })
@@ -50,6 +57,9 @@ export class GenerosController {
   }
 
   @Patch(':id')
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @ApiUnauthorizedResponse({ description: 'Token no enviado o inválido' })
   @ApiOperation({ summary: 'Actualizar un género' })
   @ApiOkResponse({ description: 'Género actualizado' })
   @ApiBadRequestResponse({ description: 'Datos inválidos' })
@@ -59,6 +69,9 @@ export class GenerosController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard)
+  @ApiBearerAuth()
+  @ApiUnauthorizedResponse({ description: 'Token no enviado o inválido' })
   @ApiOperation({ summary: 'Eliminar un género (borrado lógico)' })
   @ApiOkResponse({ description: 'Género eliminado' })
   @ApiNotFoundResponse({ description: 'El género no existe' })

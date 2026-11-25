@@ -7,6 +7,8 @@ import { ClientesModule } from './clientes/clientes.module';
 import { PeliculasModule } from './peliculas/peliculas.module';
 import { FuncionesModule } from './funciones/funciones.module';
 import { BoletosModule } from './boletos/boletos.module';
+import { UsuariosModule } from './usuarios/usuarios.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -34,6 +36,8 @@ import { BoletosModule } from './boletos/boletos.module';
     PeliculasModule,
     FuncionesModule,
     BoletosModule,
+    UsuariosModule,
+    AuthModule,
   ],
 })
 export class AppModule {}
