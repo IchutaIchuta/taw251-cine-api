@@ -6,6 +6,7 @@ import { GenerosModule } from './generos/generos.module';
 import { ClientesModule } from './clientes/clientes.module';
 import { PeliculasModule } from './peliculas/peliculas.module';
 import { FuncionesModule } from './funciones/funciones.module';
+import { BoletosModule } from './boletos/boletos.module';
 
 @Module({
   imports: [
@@ -32,7 +33,7 @@ import { FuncionesModule } from './funciones/funciones.module';
     ClientesModule,
     PeliculasModule,
     FuncionesModule,
-    // Pendiente: BoletosModule
+    BoletosModule,
   ],
 })
 export class AppModule {}
