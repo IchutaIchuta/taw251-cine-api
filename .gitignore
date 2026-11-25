@@ -1,0 +1,15 @@
+# Dependencias
+node_modules/
+
+# Build
+dist/
+
+# Variables de entorno
+.env
+.env.*
+!.env.example
+
+# Logs / varios
+*.log
+coverage/
+.DS_Store
