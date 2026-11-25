@@ -31,6 +31,13 @@ export class BoletosService {
     if (!funcion) {
       throw new NotFoundException(`La función con id ${idFuncion} no existe`);
     }
+    // Si la sala fue eliminada (soft delete), TypeORM no la carga
+    // y funcion.sala llega null: no se puede validar el asiento
+    if (!funcion.sala) {
+      throw new BadRequestException(
+        `La sala de la función ${idFuncion} fue eliminada; no se pueden vender boletos`,
+      );
+    }
     return funcion;
   }
 
